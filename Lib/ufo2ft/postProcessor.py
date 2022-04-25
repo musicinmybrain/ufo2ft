@@ -393,4 +393,7 @@ def _reloadFont(font: TTFont) -> TTFont:
     stream = BytesIO()
     font.save(stream)
     stream.seek(0)
-    return TTFont(stream)
+    font2 = TTFont(stream)
+    if font.cfg:
+        font2.cfg = font.cfg.copy()
+    return font2

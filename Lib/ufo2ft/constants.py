@@ -130,3 +130,5 @@ USE_SCRIPTS = [
     "Toto",  # Toto
     "Vith",  # Vithkuqi
 ]
+
+GPOS_COMPRESSION_LEVEL = "fontTools.otlLib.optimize.gpos:COMPRESSION_LEVEL"

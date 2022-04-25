@@ -94,9 +94,16 @@ class BaseOutlineCompiler:
     )
 
     def __init__(
-        self, font, glyphSet=None, glyphOrder=None, tables=None, notdefGlyph=None
+        self,
+        font,
+        glyphSet=None,
+        glyphOrder=None,
+        tables=None,
+        notdefGlyph=None,
+        ftConfig=None,
     ):
         self.ufo = font
+        self.ftConfig = ftConfig or {}
         # use the previously filtered glyphSet, if any
         if glyphSet is None:
             glyphSet = {g.name: g for g in font}
@@ -119,7 +126,7 @@ class BaseOutlineCompiler:
         """
         Compile the OpenType binary.
         """
-        self.otf = TTFont(sfntVersion=self.sfntVersion)
+        self.otf = TTFont(sfntVersion=self.sfntVersion, cfg=self.ftConfig)
 
         # only compile vertical metrics tables if vhea metrics are defined
         vertical_metrics = [
@@ -1081,6 +1088,7 @@ class OutlineOTFCompiler(BaseOutlineCompiler):
         glyphOrder=None,
         tables=None,
         notdefGlyph=None,
+        ftConfig=None,
         roundTolerance=None,
         optimizeCFF=True,
     ):
@@ -1095,6 +1103,7 @@ class OutlineOTFCompiler(BaseOutlineCompiler):
             glyphOrder=glyphOrder,
             tables=tables,
             notdefGlyph=notdefGlyph,
+            ftConfig=ftConfig,
         )
         self.optimizeCFF = optimizeCFF
         self._defaultAndNominalWidths = None
